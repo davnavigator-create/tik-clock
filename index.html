@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIK Clock</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
+}
+
+.app {
+    max-width: 480px;
+    margin: auto;
+    min-height: 100vh;
+    padding: 24px 18px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    font-size: 42px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.subtitle {
+    color: #8e9bb5;
+    margin-top: 6px;
+}
+
+.balance {
+    background: #151d33;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.balance-label {
+    color: #8e9bb5;
+    font-size: 14px;
+}
+
+.balance-value {
+    font-size: 34px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.tik {
+    color: #ffd84d;
+}
+
+.clock {
+    background: linear-gradient(145deg, #18233d, #10172a);
+    border-radius: 28px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+
+.clock-face {
+    width: 190px;
+    height: 190px;
+    border: 8px solid #ffd84d;
+    border-radius: 50%;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.clock-icon {
+    font-size: 45px;
+}
+
+.level {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.reward {
+    color: #8e9bb5;
+    margin-top: 8px;
+}
+
+button {
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    padding: 17px;
+    margin-top: 22px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #ffd84d;
+    color: #111827;
+}
+
+button:disabled {
+    background: #394158;
+    color: #8e9bb5;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.card {
+    background: #151d33;
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+}
+
+.card-title {
+    color: #8e9bb5;
+    font-size: 13px;
+}
+
+.card-value {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.footer {
+    text-align: center;
+    color: #59657e;
+    font-size: 12px;
+    margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="header">
+        <div class="logo">⏱️</div>
+        <div class="title">TIK Clock</div>
+        <div class="subtitle">Start your clock. Earn TIK.</div>
+    </div>
+
+    <div class="balance">
+        <div class="balance-label">YOUR BALANCE</div>
+        <div class="balance-value">
+            <span id="balance">0</span> <span class="tik">TIK</span>
+        </div>
+    </div>
+
+    <div class="clock">
+
+        <div class="clock-face">
+            <div class="clock-icon">⏱️</div>
+            <div class="level" id="level">Starter</div>
+        </div>
+
+        <div class="reward">
+            Daily reward: <b><span id="reward">1</span> TIK</b>
+        </div>
+
+        <button id="activate" onclick="activateClock()">
+            ACTIVATE CLOCK
+        </button>
+
+    </div>
+
+    <div class="info">
+
+        <div class="card">
+            <div class="card-title">CLOCK LEVEL</div>
+            <div class="card-value" id="level2">Starter</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">NEXT LEVEL</div>
+            <div class="card-value" id="next">Steel</div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Maximum supply: 21,000,000 TIK
+    </div>
+
+</div>
+
+<script>
+
+let balance = Number(localStorage.getItem("tikBalance")) || 0;
+let lastActivation = Number(localStorage.getItem("lastActivation")) || 0;
+
+const levels = [
+    { name: "Starter", reward: 1 },
+    { name: "Steel", reward: 2 },
+    { name: "Silver", reward: 4 },
+    { name: "Gold", reward: 8 },
+    { name: "Platinum", reward: 16 },
+    { name: "Diamond", reward: 32 },
+    { name: "Chrono", reward: 64 }
+];
+
+let currentLevel = Number(localStorage.getItem("tikLevel")) || 0;
+
+function updateScreen() {
+
+    document.getElementById("balance").textContent = balance;
+    document.getElementById("level").textContent = levels[currentLevel].name;
+    document.getElementById("level2").textContent = levels[currentLevel].name;
+    document.getElementById("reward").textContent = levels[currentLevel].reward;
+
+    if (currentLevel < levels.length - 1) {
+        document.getElementById("next").textContent =
+            levels[currentLevel + 1].name;
+    } else {
+        document.getElementById("next").textContent = "MAX";
+    }
+
+    const button = document.getElementById("activate");
+
+    if (Date.now() - lastActivation < 24 * 60 * 60 * 1000) {
+        button.disabled = true;
+        button.textContent = "CLOCK ACTIVE";
+    } else {
+        button.disabled = false;
+        button.textContent = "ACTIVATE CLOCK
