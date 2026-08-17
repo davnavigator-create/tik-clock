@@ -6,243 +6,684 @@
 <title>TIK Clock</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{
+  box-sizing:border-box
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b1020;
-    color: white;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#080d20;
+  color:#fff;
+  min-height:100vh;
+  padding:24px 18px 40px;
 }
 
-.app {
-    max-width: 480px;
-    margin: auto;
-    min-height: 100vh;
-    padding: 24px 18px;
+.container{
+  max-width:680px;
+  margin:auto;
+  text-align:center
 }
 
-.header {
-    text-align: center;
-    margin-bottom: 25px;
+.logo{
+  font-size:62px;
+  line-height:1
 }
 
-.logo {
-    font-size: 42px;
+h1{
+  font-size:42px;
+  margin:12px 0 8px
 }
 
-.title {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 5px;
+.subtitle{
+  font-size:24px;
+  color:#9aa5c5;
+  margin-bottom:42px
 }
 
-.subtitle {
-    color: #8e9bb5;
-    margin-top: 6px;
+.card{
+  background:#151d37;
+  border-radius:34px;
+  padding:32px 24px;
+  margin-bottom:22px;
+  box-shadow:0 12px 35px rgba(0,0,0,.18)
 }
 
-.balance {
-    background: #151d33;
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 20px;
+.balance-label,
+.small-label{
+  color:#9aa5c5;
+  font-size:20px
 }
 
-.balance-label {
-    color: #8e9bb5;
-    font-size: 14px;
+.balance{
+  font-size:58px;
+  font-weight:800;
+  margin-top:12px
 }
 
-.balance-value {
-    font-size: 34px;
-    font-weight: bold;
-    margin-top: 7px;
+.balance span{
+  color:#ffd34d
 }
 
-.tik {
-    color: #ffd84d;
+.clock{
+  width:330px;
+  height:330px;
+  border:14px solid #ffd34d;
+  border-radius:50%;
+  margin:0 auto 34px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center
 }
 
-.clock {
-    background: linear-gradient(145deg, #18233d, #10172a);
-    border-radius: 28px;
-    padding: 28px 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+.clock-icon{
+  font-size:78px
 }
 
-.clock-face {
-    width: 190px;
-    height: 190px;
-    border: 8px solid #ffd84d;
-    border-radius: 50%;
-    margin: 0 auto 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.level{
+  font-size:38px;
+  font-weight:800;
+  margin-top:8px
 }
 
-.clock-icon {
-    font-size: 45px;
+.reward{
+  font-size:27px;
+  color:#9aa5c5;
+  margin:28px 0 24px
 }
 
-.level {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 8px;
+.reward b{
+  color:#fff
 }
 
-.reward {
-    color: #8e9bb5;
-    margin-top: 8px;
+.countdown{
+  font-size:24px;
+  font-weight:700;
+  margin:10px 0 28px;
+  color:#ffd34d
 }
 
-button {
-    width: 100%;
-    border: none;
-    border-radius: 16px;
-    padding: 17px;
-    margin-top: 22px;
-    font-size: 18px;
-    font-weight: bold;
-    background: #ffd84d;
-    color: #111827;
+button{
+  width:100%;
+  border:0;
+  border-radius:24px;
+  padding:22px;
+  background:#ffd34d;
+  color:#080d20;
+  font-size:25px;
+  font-weight:800;
+  cursor:pointer
 }
 
-button:disabled {
-    background: #394158;
-    color: #8e9bb5;
+button:disabled{
+  opacity:.55;
+  cursor:default
 }
 
-.info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 20px;
+.status{
+  font-size:20px;
+  color:#9aa5c5;
+  margin-top:20px;
+  min-height:25px
 }
 
-.card {
-    background: #151d33;
-    border-radius: 16px;
-    padding: 16px;
-    text-align: center;
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px
 }
 
-.card-title {
-    color: #8e9bb5;
-    font-size: 13px;
+.stat{
+  background:#151d37;
+  border-radius:28px;
+  padding:28px 15px
 }
 
-.card-value {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 6px;
+.stat .value{
+  font-size:28px;
+  font-weight:800;
+  margin-top:12px
 }
 
-.footer {
-    text-align: center;
-    color: #59657e;
-    font-size: 12px;
-    margin-top: 25px;
+.reset{
+  margin-top:18px;
+  background:transparent;
+  color:#9aa5c5;
+  border:1px solid #303a58;
+  font-size:15px;
+  padding:12px
+}
+
+.total{
+  margin-top:20px;
+  color:#687596;
+  font-size:14px
+}
+
+@media(max-width:430px){
+
+  body{
+    padding:18px 14px 30px
+  }
+
+  h1{
+    font-size:38px
+  }
+
+  .subtitle{
+    font-size:22px
+  }
+
+  .clock{
+    width:290px;
+    height:290px
+  }
+
+  .balance{
+    font-size:52px
+  }
+
+  .level{
+    font-size:34px
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-    <div class="header">
-        <div class="logo">⏱️</div>
-        <div class="title">TIK Clock</div>
-        <div class="subtitle">Start your clock. Earn TIK.</div>
+  <div class="logo">⏱️</div>
+
+  <h1>TIK Clock</h1>
+
+  <div class="subtitle">
+    Start your clock. Earn TIK.
+  </div>
+
+
+  <!-- BALANCE -->
+
+  <div class="card">
+
+    <div class="balance-label">
+      YOUR BALANCE
     </div>
 
     <div class="balance">
-        <div class="balance-label">YOUR BALANCE</div>
-        <div class="balance-value">
-            <span id="balance">0</span> <span class="tik">TIK</span>
-        </div>
+      <span id="balance">0</span> TIK
     </div>
+
+  </div>
+
+
+  <!-- CLOCK -->
+
+  <div class="card">
 
     <div class="clock">
 
-        <div class="clock-face">
-            <div class="clock-icon">⏱️</div>
-            <div class="level" id="level">Starter</div>
-        </div>
+      <div class="clock-icon">
+        ⏱️
+      </div>
 
-        <div class="reward">
-            Daily reward: <b><span id="reward">1</span> TIK</b>
-        </div>
-
-        <button id="activate" onclick="activateClock()">
-            ACTIVATE CLOCK
-        </button>
+      <div class="level" id="level">
+        Starter
+      </div>
 
     </div>
 
-    <div class="info">
 
-        <div class="card">
-            <div class="card-title">CLOCK LEVEL</div>
-            <div class="card-value" id="level2">Starter</div>
-        </div>
+    <div class="reward">
+      Daily reward:
+      <b>
+        <span id="reward">1</span> TIK
+      </b>
+    </div>
 
-        <div class="card">
-            <div class="card-title">NEXT LEVEL</div>
-            <div class="card-value" id="next">Steel</div>
-        </div>
+
+    <div class="countdown" id="countdown">
+      Clock not active
+    </div>
+
+
+    <button id="activate">
+      ACTIVATE CLOCK
+    </button>
+
+
+    <div class="status" id="status"></div>
+
+  </div>
+
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="small-label">
+        CLOCK LEVEL
+      </div>
+
+      <div class="value" id="currentLevel">
+        Starter
+      </div>
 
     </div>
 
-    <div class="footer">
-        Maximum supply: 21,000,000 TIK
+
+    <div class="stat">
+
+      <div class="small-label">
+        NEXT LEVEL
+      </div>
+
+      <div class="value" id="nextLevel">
+        Steel
+      </div>
+
     </div>
+
+  </div>
+
+
+  <div class="total">
+    Maximum supply: 21,000,000 TIK
+  </div>
+
+
+  <button class="reset" id="reset">
+    Reset local progress
+  </button>
 
 </div>
 
+
 <script>
 
-let balance = Number(localStorage.getItem("tikBalance")) || 0;
-let lastActivation = Number(localStorage.getItem("lastActivation")) || 0;
+const MAX_SUPPLY = 21000000;
 
-const levels = [
-    { name: "Starter", reward: 1 },
-    { name: "Steel", reward: 2 },
-    { name: "Silver", reward: 4 },
-    { name: "Gold", reward: 8 },
-    { name: "Platinum", reward: 16 },
-    { name: "Diamond", reward: 32 },
-    { name: "Chrono", reward: 64 }
+const DAY = 24 * 60 * 60 * 1000;
+
+
+/*
+  LEVEL SYSTEM
+
+  Starter  = 0 claims
+  Steel    = 7 claims
+  Silver   = 30 claims
+  Gold     = 90 claims
+  Platinum = 180 claims
+  Diamond  = 365 claims
+  Chrono   = 730 claims
+*/
+
+const LEVELS = [
+
+  {
+    name:"Starter",
+    reward:1,
+    requiredClaims:0
+  },
+
+  {
+    name:"Steel",
+    reward:2,
+    requiredClaims:7
+  },
+
+  {
+    name:"Silver",
+    reward:4,
+    requiredClaims:30
+  },
+
+  {
+    name:"Gold",
+    reward:8,
+    requiredClaims:90
+  },
+
+  {
+    name:"Platinum",
+    reward:16,
+    requiredClaims:180
+  },
+
+  {
+    name:"Diamond",
+    reward:32,
+    requiredClaims:365
+  },
+
+  {
+    name:"Chrono",
+    reward:64,
+    requiredClaims:730
+  }
+
 ];
 
-let currentLevel = Number(localStorage.getItem("tikLevel")) || 0;
 
-function updateScreen() {
+const KEY = "tikClock_v2";
 
-    document.getElementById("balance").textContent = balance;
-    document.getElementById("level").textContent = levels[currentLevel].name;
-    document.getElementById("level2").textContent = levels[currentLevel].name;
-    document.getElementById("reward").textContent = levels[currentLevel].reward;
 
-    if (currentLevel < levels.length - 1) {
-        document.getElementById("next").textContent =
-            levels[currentLevel + 1].name;
-    } else {
-        document.getElementById("next").textContent = "MAX";
+let data =
+  JSON.parse(localStorage.getItem(KEY) || "null")
+  ||
+  {
+    balance:0,
+    level:0,
+    active:false,
+    lastClaim:null,
+    totalClaims:0
+  };
+
+
+function save(){
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+function updateLevel(){
+
+  let newLevel = 0;
+
+  for(let i = 0; i < LEVELS.length; i++){
+
+    if(
+      data.totalClaims >=
+      LEVELS[i].requiredClaims
+    ){
+
+      newLevel = i;
+
     }
 
-    const button = document.getElementById("activate");
+  }
 
-    if (Date.now() - lastActivation < 24 * 60 * 60 * 1000) {
-        button.disabled = true;
-        button.textContent = "CLOCK ACTIVE";
-    } else {
-        button.disabled = false;
-        button.textContent = "ACTIVATE CLOCK
+  data.level = newLevel;
+
+}
+
+
+function formatTime(ms){
+
+  if(ms <= 0){
+
+    return "READY TO CLAIM";
+
+  }
+
+  const totalSeconds =
+    Math.floor(ms / 1000);
+
+  const hours =
+    Math.floor(totalSeconds / 3600);
+
+  const minutes =
+    Math.floor(
+      (totalSeconds % 3600) / 60
+    );
+
+  const seconds =
+    totalSeconds % 60;
+
+  return (
+    String(hours).padStart(2,"0")
+    + ":"
+    + String(minutes).padStart(2,"0")
+    + ":"
+    + String(seconds).padStart(2,"0")
+  );
+
+}
+
+
+function render(){
+
+  updateLevel();
+
+  const L =
+    LEVELS[data.level];
+
+
+  document.getElementById("balance")
+    .textContent =
+    data.balance;
+
+
+  document.getElementById("level")
+    .textContent =
+    L.name;
+
+
+  document.getElementById("currentLevel")
+    .textContent =
+    L.name;
+
+
+  document.getElementById("reward")
+    .textContent =
+    L.reward;
+
+
+  document.getElementById("nextLevel")
+    .textContent =
+    LEVELS[data.level + 1]
+      ?.name
+      ||
+      "MAX";
+
+
+  const button =
+    document.getElementById("activate");
+
+
+  const countdown =
+    document.getElementById("countdown");
+
+
+  const status =
+    document.getElementById("status");
+
+
+  if(!data.active){
+
+    button.disabled = false;
+
+    button.textContent =
+      "ACTIVATE CLOCK";
+
+    countdown.textContent =
+      "Clock not active";
+
+    status.textContent =
+      "";
+
+    return;
+
+  }
+
+
+  const now = Date.now();
+
+
+  const elapsed =
+    now - data.lastClaim;
+
+
+  if(elapsed >= DAY){
+
+    button.disabled = false;
+
+    button.textContent =
+      "CLAIM " + L.reward + " TIK";
+
+    countdown.textContent =
+      "REWARD READY";
+
+    status.textContent =
+      "Your daily reward is ready.";
+
+  }else{
+
+    button.disabled = true;
+
+    button.textContent =
+      "CLOCK ACTIVE";
+
+    countdown.textContent =
+      formatTime(DAY - elapsed);
+
+    status.textContent =
+      "Your clock is running.";
+
+  }
+
+}
+
+
+document.getElementById("activate").onclick =
+function(){
+
+  const now = Date.now();
+
+
+  /*
+    FIRST ACTIVATION
+  */
+
+  if(!data.active){
+
+    data.active = true;
+
+    data.lastClaim = now;
+
+    save();
+
+    render();
+
+    return;
+
+  }
+
+
+  /*
+    CLAIM DAILY REWARD
+  */
+
+  const elapsed =
+    now - data.lastClaim;
+
+
+  if(elapsed < DAY){
+
+    return;
+
+  }
+
+
+  const L =
+    LEVELS[data.level];
+
+
+  /*
+    CHECK MAXIMUM SUPPLY
+  */
+
+  if(data.balance + L.reward > MAX_SUPPLY){
+
+    data.balance = MAX_SUPPLY;
+
+    save();
+
+    render();
+
+    alert(
+      "Maximum TIK supply reached."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    ADD REWARD
+  */
+
+  data.balance += L.reward;
+
+  data.totalClaims += 1;
+
+  data.lastClaim = now;
+
+
+  updateLevel();
+
+  save();
+
+  render();
+
+
+  alert(
+    "+" + L.reward + " TIK received!"
+  );
+
+};
+
+
+document.getElementById("reset").onclick =
+function(){
+
+  if(
+    confirm(
+      "Reset all local TIK Clock progress?"
+    )
+  ){
+
+    data = {
+
+      balance:0,
+      level:0,
+      active:false,
+      lastClaim:null,
+      totalClaims:0
+
+    };
+
+    save();
+
+    render();
+
+  }
+
+};
+
+
+/*
+  UPDATE COUNTDOWN EVERY SECOND
+*/
+
+setInterval(
+  render,
+  1000
+);
+
+
+render();
+
+</script>
+
+</body>
+</html>
